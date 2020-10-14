@@ -1,0 +1,48 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api-student/src",
+  "monorepo": true,
+  "root": "apps/api-student",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/api-student/tsconfig.app.json"
+  },
+  "projects": {
+    "api-payment": {
+      "type": "application",
+      "root": "apps/api-payment",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-payment/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-payment/tsconfig.app.json"
+      }
+    },
+    "api-student": {
+      "type": "application",
+      "root": "apps/api-student",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-student/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-student/tsconfig.app.json"
+      }
+    },
+    "pipes": {
+      "type": "library",
+      "root": "libs/pipes",
+      "entryFile": "index",
+      "sourceRoot": "libs/pipes/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/pipes/tsconfig.lib.json"
+      }
+    },
+    "api-business": {
+      "type": "application",
+      "root": "apps/api-business",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-business/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-business/tsconfig.app.json"
+      }
+    }
+  }
+}
