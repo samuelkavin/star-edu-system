@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {StudentDto} from './students.dto';
-import {IStudentDetails} from './students.interface';
+import {IStudent} from './students.interface';
 import {CreateStudentDetail, StudentDocument} from './students.schema';
 
 @Injectable()
@@ -14,39 +14,14 @@ export class StudentsService {
 
   async createStudent(
     createStudent: StudentDto,
-  ): Promise<{name: string; code: number; message: string}> {
-    const {
-      _id,
-      name,
-      status,
-      dob,
-      healthCondition,
-      healthComment,
-      emergencyContact,
-      age,
-      gender,
-      race,
-      nationality,
-      nric,
-    } = createStudent;
+  ): Promise<{_id: string; name: string; code: number; message: string}> {
+    const {_id, name} = createStudent;
 
-    const student = new this.studentsModel({
-      _id,
-      name,
-      status,
-      dob,
-      healthCondition,
-      healthComment,
-      emergencyContact,
-      age,
-      gender,
-      race,
-      nationality,
-      nric,
-    });
+    const student = new this.studentsModel(createStudent);
     await this.studentsModel.create(student);
 
     return {
+      _id,
       name,
       code: 201,
       message: `Registration success`,

@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {IsNotEmpty} from 'class-validator';
-import {ICommonDetails, IStudentDetails, StudentsStatus} from './students.interface';
+import {ICommonDetails, IStudent, StudentsStatus} from './students.interface';
 
 export class CommonDto implements ICommonDetails {
   _id: string;
@@ -25,7 +25,11 @@ export class CommonDto implements ICommonDetails {
   nric: string;
 }
 
-export class StudentDto extends CommonDto implements IStudentDetails {
+export class StudentDto extends CommonDto implements IStudent {
+  @IsNotEmpty()
+  @ApiProperty()
+  parentsId: string;
+
   @IsNotEmpty()
   @ApiProperty()
   dob: string;

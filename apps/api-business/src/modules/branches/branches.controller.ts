@@ -21,7 +21,7 @@ export class BranchesController {
   @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'The record has been successfully created.',
+    description: 'The branch has been successfully created',
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -39,6 +39,10 @@ export class BranchesController {
     type: Error,
   })
   @ApiResponse({status: HttpStatus.FORBIDDEN, description: 'Forbidden'})
+  @ApiOperation({
+    operationId: 'createBranch',
+    summary: 'Create a branch to profile',
+  })
   @UsePipes(ValidationPipe)
   async createBranch(@Body() body: BranchesDto): Promise<BranchesDto> {
     const result = await this.branchesService.createCompanyBranch(body);
@@ -50,9 +54,29 @@ export class BranchesController {
     status: HttpStatus.OK,
     description: 'Return all branches that belong to particular company',
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    description: 'Get particular profile details is failed',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_GATEWAY,
+    description: 'Internal communication error',
+    type: Error,
+  })
   @ApiOperation({
     operationId: 'getCompanyBranches',
-    description: "Return all company's branch",
+    summary: "Get all company's branch",
   })
   async getCompanyBranches(@Param('profileId') profileId: string): Promise<IBranches[]> {
     return await this.branchesService.getCompanyBranches(profileId);

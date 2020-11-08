@@ -3,12 +3,12 @@ import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {StudentDto} from './students.dto';
 import {StudentsService} from './students.service';
 
-@ApiTags('students')
+@ApiTags('Students')
 @Controller('students')
 export class StudentsController {
   constructor(private studentService: StudentsService) {}
 
-  @Post('details')
+  @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The record has been successfully created.',

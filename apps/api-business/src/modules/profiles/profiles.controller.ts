@@ -14,32 +14,57 @@ import {ProfilesDto} from './profiles.dto';
 import {IProfiles} from './profiles.interface';
 import {ProfilesService} from './profiles.service';
 
-@ApiTags('Profiles')
-@Controller('profiles')
+@ApiTags('Profile')
+@Controller('profile')
 export class ProfilesController {
   constructor(private profileService: ProfilesService) {}
 
-  @Post('details')
+  @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The record has been successfully created.',
   })
   @ApiResponse({status: HttpStatus.FORBIDDEN, description: 'Forbidden'})
+  @ApiOperation({
+    operationId: 'createCompanyProfile',
+    summary: 'Create company profile',
+  })
   @UsePipes(ValidationPipe)
   async createCompanyProfile(@Body() createBusinessProfile: ProfilesDto): Promise<IProfiles> {
+    console.log('ssasdasdasd');
     return this.profileService.createCompanyProfile(createBusinessProfile);
   }
 
   @Put(':profileId')
-  @ApiOperation({
-    operationId: 'updateCompanyProfile',
-    summary: 'update company profile',
-  })
   @ApiParam({
     name: 'profileId',
     type: 'string',
     description: 'Profile Id',
     required: true,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    description: 'Update particular profile details is failed',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_GATEWAY,
+    description: 'Internal communication error',
+    type: Error,
+  })
+  @ApiOperation({
+    operationId: 'updateCompanyProfile',
+    summary: 'Update a particular profile details',
   })
   async updateCompanyProfile(
     @Param('profileId') profileId: string,
@@ -51,14 +76,34 @@ export class ProfilesController {
   @Get()
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Return all profiles list',
+    description: 'Get all profiles list',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    description: 'Get profiles validation is failed',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_GATEWAY,
+    description: 'Internal communication error',
+    type: Error,
   })
   @ApiOperation({
-    operationId: 'getAllCompanies',
-    description: 'Return all profiles list',
+    operationId: 'getAllProfiles',
+    summary: 'Return all profiles list',
   })
-  async getAllCompanies(): Promise<IProfiles[]> {
-    return await this.profileService.getAllCompanies();
+  async getAllProfiles(): Promise<IProfiles[]> {
+    return await this.profileService.getAllProfiles();
   }
 
   @Get(':profileId')
@@ -66,9 +111,29 @@ export class ProfilesController {
     status: HttpStatus.OK,
     description: 'Return all branches that belong to particular company',
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    description: 'Get particular profile details is failed',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+    type: Error,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_GATEWAY,
+    description: 'Internal communication error',
+    type: Error,
+  })
   @ApiOperation({
     operationId: 'getAllCompanyBranches',
-    description: "Return all company's branch",
+    summary: 'Get single profile details',
   })
   async getAllCompanyBranches(@Param('profileId') profileId: string) {
     return await this.profileService.getAllCompanyBranches(profileId);

@@ -1,11 +1,14 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document} from 'mongoose';
-import {StudentsStatus} from './students.interface';
+import {IStudent, StudentsStatus} from './students.interface';
 
 export type StudentDocument = CreateStudentDetail & Document;
 
 @Schema()
-export class CreateStudentDetail {
+export class CreateStudentDetail implements IStudent {
+  @Prop()
+  parentsId: string;
+
   @Prop()
   name: string;
 

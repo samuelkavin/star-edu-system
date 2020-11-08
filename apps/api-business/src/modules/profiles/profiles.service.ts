@@ -10,13 +10,9 @@ export class ProfilesService {
   constructor(@InjectModel('Profiles') private profilesModel: Model<ProfilesDocument>) {}
 
   async createCompanyProfile(createProfiles: ProfilesDto): Promise<IProfiles> {
-    const {name, designation, nric} = createProfiles;
+    // const {name, designation, nric} = createProfiles;
 
-    const profile = new this.profilesModel({
-      name,
-      designation,
-      nric,
-    });
+    const profile = new this.profilesModel(createProfiles);
 
     return await this.profilesModel.create(profile);
   }
@@ -29,11 +25,11 @@ export class ProfilesService {
     await this.profilesModel.update({_id: profileId}, {$set: profileDetails});
 
     return {
-      message: `${profileDetails.name} has successfully updated`,
+      message: `${profileDetails.companyName} has successfully updated`,
     };
   }
 
-  async getAllCompanies(): Promise<IProfiles[]> {
+  async getAllProfiles(): Promise<IProfiles[]> {
     return await this.profilesModel.find();
   }
 
