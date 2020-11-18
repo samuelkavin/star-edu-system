@@ -1,6 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsEnum, IsNotEmpty} from 'class-validator';
-import {Address, IDirector, IProfiles, StatusEnum} from './profiles.interface';
+import {IsEnum, IsIn, IsNotEmpty, IsOptional} from 'class-validator';
+import {IProfiles, StatusEnum} from './profiles.interface';
 
 export class ProfilesDto implements IProfiles {
   @IsNotEmpty()
@@ -43,4 +43,16 @@ export class ProfilesDto implements IProfiles {
   // @IsNotEmpty()
   // @ApiProperty()
   // directors: IDirector[];
+}
+
+export class FilterProfileDto {
+  @ApiProperty({
+    required: false,
+  })
+  status: StatusEnum;
+
+  @ApiProperty({
+    required: false,
+  })
+  search: string;
 }

@@ -6,12 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import {ApiOperation, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
-import {ProfilesDto} from './profiles.dto';
-import {IProfiles} from './profiles.interface';
+import {ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {FilterProfileDto, ProfilesDto} from './profiles.dto';
+import {IProfiles, StatusEnum} from './profiles.interface';
 import {ProfilesService} from './profiles.service';
 
 @ApiTags('Profile')
@@ -102,8 +103,10 @@ export class ProfilesController {
     operationId: 'getAllProfiles',
     summary: 'Return all profiles list',
   })
-  async getAllProfiles(): Promise<IProfiles[]> {
-    return await this.profileService.getAllProfiles();
+  @ApiQuery({name: 'status', enum: StatusEnum, required: false})
+  async getAllProfiles(@Query() filter: FilterProfileDto): Promise<IProfiles[]> {
+    console.log('filter', filter);
+    return await this.profileService.getAllProfiles(filter);
   }
 
   @Get(':profileId')

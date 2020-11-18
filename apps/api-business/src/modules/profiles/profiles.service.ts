@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {ProfilesDto} from './profiles.dto';
+import {FilterProfileDto, ProfilesDto} from './profiles.dto';
 import {IProfiles} from './profiles.interface';
 import {ProfilesDocument} from './profiles.schema';
 
@@ -29,7 +29,11 @@ export class ProfilesService {
     };
   }
 
-  async getAllProfiles(): Promise<IProfiles[]> {
+  async getAllProfiles(filter: FilterProfileDto): Promise<IProfiles[]> {
+    // const findParams: any = {};
+    // if (filter && filter.status) {
+    //   findParams.status = {$regex: filter.status};
+    // }
     return await this.profilesModel.find();
   }
 
